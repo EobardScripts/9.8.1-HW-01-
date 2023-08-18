@@ -52,7 +52,7 @@ func setCulprit(p map[string]human.Man, s []string) string {
 }
 
 func main() {
-	//Для случайных чисел
+	//Инициализация для случайных чисел
 	rand.Seed(time.Now().UnixNano())
 	people := createBase()
 	var suspects = make([]string, 2000)
