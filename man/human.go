@@ -3,45 +3,45 @@ package human
 import "fmt"
 
 type Man struct {
-	Name     string
-	LastName string
-	Age      int
-	Gender   string
-	Crimes   int
+	name     string
+	lastName string
+	age      int
+	gender   string
+	crimes   int
 }
 
 func New(name, lastName string, age int, gender string, crimes int) *Man {
 	m := Man{
-		Name:     name,
-		LastName: lastName,
-		Age:      age,
-		Gender:   gender,
-		Crimes:   crimes,
+		name:     name,
+		lastName: lastName,
+		age:      age,
+		gender:   gender,
+		crimes:   crimes,
 	}
 
 	return &m
 }
 
-func (m *Man) GetName() string {
-	return m.Name
+func (m *Man) Name() string {
+	return m.name
 }
 
-func (m *Man) GetLastName() string {
-	return m.LastName
+func (m *Man) LastName() string {
+	return m.lastName
 }
 
-func (m *Man) GetAge() int {
-	return m.Age
+func (m *Man) Age() int {
+	return m.age
 }
 
-func (m *Man) GetGender() string {
-	return m.Gender
+func (m *Man) Gender() string {
+	return m.gender
 }
 
-func (m *Man) GetCrimes() int {
-	return m.Crimes
+func (m *Man) Crimes() int {
+	return m.crimes
 }
 
 func (m *Man) AllInfo() string {
-	return fmt.Sprintf("Подозреваемый: %s %s\nВозраст: %d\nПол: %s\nСовершенных преступлений: %d", m.LastName, m.Name, m.Age, m.Gender, m.Crimes)
+	return fmt.Sprintf("Подозреваемый: %s %s\nВозраст: %d\nПол: %s\nСовершенных преступлений: %d", m.lastName, m.name, m.age, m.gender, m.crimes)
 }

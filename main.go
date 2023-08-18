@@ -19,28 +19,16 @@ func createBase() map[string]human.Man {
 
 		m := human.New(nameData[0], nameData[1], generator.RandInt(16, 51), nameData[2], generator.RandInt(0, 21))
 
-		s[fmt.Sprintf("%s %s", m.LastName, m.Name)] = *m
+		s[fmt.Sprintf("%s %s", m.LastName(), m.Name())] = *m
 	}
 	return s
-}
-
-// Выявление подозреваемого с максимальным кол-вом преступлений
-func maxCrimes(c []human.Man) int {
-	max := 0
-	i := 0
-	for index, culprit := range c {
-		if culprit.GetCrimes() > max {
-			max = culprit.GetCrimes()
-			i = index
-		}
-	}
-
-	return i
 }
 
 // Поиск подозреваемых в базе
 func setCulprit(p map[string]human.Man, s []string) string {
 	var culprits []human.Man
+	max := 0
+	i := 0
 
 	for _, suspect := range s {
 		culprit, ok := p[suspect]
@@ -49,21 +37,37 @@ func setCulprit(p map[string]human.Man, s []string) string {
 		}
 	}
 
-	return culprits[maxCrimes(culprits)].AllInfo()
+	if len(culprits) == 0 {
+		return ""
+	}
+
+	for index, culprit := range culprits {
+		if culprit.Crimes() > max {
+			max = culprit.Crimes()
+			i = index
+		}
+	}
+
+	return culprits[i].AllInfo()
 }
 
 func main() {
 	//Для случайных чисел
 	rand.Seed(time.Now().UnixNano())
 	people := createBase()
-	var suspects []string
+	var suspects = make([]string, 2000)
 
 	//Создание списка для сравнения с подозреваемыми
-	for i := 0; i <= 2000; i++ {
+	for i := 0; i < 2000; i++ {
 		//0 - имя, 1 - фамилия, 2 - пол
 		names := strings.Split(generator.GetRandomName(), ";")
 		suspects = append(suspects, fmt.Sprintf("%s %s", names[1], names[0]))
 	}
 
-	fmt.Println(setCulprit(people, suspects))
+	culprit := setCulprit(people, suspects)
+	if len(culprit) == 0 {
+		fmt.Println("В базе данных нет информации по запрошенным подозреваемым")
+	} else {
+		fmt.Println(culprit)
+	}
 }
